@@ -1,0 +1,35 @@
+{% load static %}
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'users/styles.css' %}">
+        <link rel="stylesheet" href="{% static 'users/style.css' %}">
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    </head>
+    <body class="bg-gradient-to-r from-purple-500 to-pink-500">
+        <nav class="shadow-md py-6 pr-10 pl-10">
+            <div class="px-5 mx-auto">
+            <div class="flex justify-between">
+                <div>
+                    <a class="flex" href="">
+                        <img class="h-20 w-20 mr-2" src="{% static 'users/images/logo.png' %}" alt="">
+                        <span class="font-semibold captalize text-xl text-grey-500 p-5">Photo App</span>
+                    </a>
+                </div>
+                <div class="space-x-1 px-5 py-5">
+                    <a class="p-5 captalize text-xl font-semibold" href="{% url 'feed' %}">Show Posts</a>
+                    {% if request.user.is_authenticated %}
+                    <a class="p-5 captalize text-xl font-semibold" href="{% url 'logout' %}">Logout</a>
+                    <a class="p-5 captalize text-xl font-semibold" href="{% url 'edit' %}">Edit Profile</a>
+                    <a class="p-5 captalize text-xl font-semibold" href="{% url 'index' %}">Show Profile</a>
+                    {% else %}
+                    <a class="p-5 captalize text-xl font-semibold" href="{% url 'login' %}">Login</a>
+                    <a class="p-5 captalize text-xl font-semibold" href="{% url 'register' %}">Register</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        </nav>
+        {% block body %}
+        {% endblock %}
+    </body>
+</html>

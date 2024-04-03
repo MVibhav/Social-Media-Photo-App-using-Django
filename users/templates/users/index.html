@@ -1,0 +1,53 @@
+{% extends "users/base.html" %}
+{% load mathfilters %}
+{% load static %}
+{% block body %}
+<center>
+<div class="space-x-1 px-5 py-5">
+    <a class="p-5 captalize text-xl font-semibold" href="{% url 'password_change' %}">Change Password</a>
+</div>
+</center>
+<div class="flex mt-1 p-9 justify-center">
+    <h2 class="text-3xl font-normal mb-2 text-white">My Posts</h2>
+</div>
+<div class="grid mx-60 p-10 grid-cols-1">
+    {% for post in posts %}
+    <a href="#">
+        <div class="rounded overflow-hidden w-[470px] h-[470px] bg-white shadow-lg">
+            <div class="user-container flex mx-6 my-6">
+                <img class="h-10 w-10 rounded-full" src="{{profile.photo.url}}" alt="">
+                <div class="mx-2 my-2 font-bold"><span class="text-indigo-500">{{post.user}}</span></div>
+            </div>
+        </div>
+        <center>
+        <img class="rounded" src="{{post.image.url}}" alt="">
+        </center>
+        <div class="px-6 py-4">
+            <div class="icon-container flex gap-3">
+                <img class="w-10 h-10" src="{% static 'users/images/heart.png' %}">
+                <img class="w-10 h-10" src="{% static 'users/images/comment.png' %}">
+            </div>
+        </div>
+        <div>
+            {% if post.liked_by.count < 1 %}
+            {% elif post.liked_by.count == 1 %}
+            {{post.liked_by.first}} likes this post
+            {% elif post.liked_by.count > 1 %}
+            {{post.liked_by.first}} & {{post.liked_by.count|sub:1}} other likes this post
+            {% endif %}
+        </div>
+        <div class="px-6 py-4">
+            <div class="font-bold text-xl mb-2">{{post.title}}</div>
+            <p class="text-gray-700 text-base">{{post.caption}}</p>
+        </div>
+        <div class="px-5 py-5">
+            {% for comment in post.comments.all %}
+            <b>{{comment.posted_by}}</b>: {{comment.body}}
+        </br>
+        {% endfor %}
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+{% endblock %}
